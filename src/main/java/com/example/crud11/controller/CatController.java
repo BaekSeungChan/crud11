@@ -3,6 +3,8 @@ package com.example.crud11.controller;
 import com.example.crud11.entity.Cat;
 import com.example.crud11.payload.CatDto;
 import com.example.crud11.service.CatService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,10 +16,15 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/cat")
 @RequiredArgsConstructor
+@Tag(name = "Cat API's")
 public class CatController {
     private final CatService catService;
 
     @PostMapping
+    @Operation(
+            summary = "Create Cat",
+            description = "Create Cat API"
+    )
     public ResponseEntity<CatDto> createCat(@Valid @RequestBody CatDto catDto){
         CatDto saveCat = catService.createCat(catDto);
         return new ResponseEntity<>(saveCat, HttpStatus.OK);
