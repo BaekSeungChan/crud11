@@ -42,4 +42,22 @@ public class DogServiceImpl implements DogService {
         return modelMapper.map(dog, DogDto.class);
     }
 
+    @Override
+    public void deleteDog(long id){
+        Dog dog = dogRepository.findById(id).orElseThrow(() -> new RuntimeException("No id"));
+        dogRepository.delete(dog);
+    }
+
+    @Override
+    public DogDto updateDog(DogDto dogDto, long id){
+        Dog dog = dogRepository.findById(id).orElseThrow(() -> new RuntimeException("No id"));
+        dog.setName(dogDto.getName());
+        dog.setAge(dogDto.getAge());
+
+        Dog saveDog = dogRepository.save(dog);
+
+        return modelMapper.map(saveDog, DogDto.class);
+    }
+
+
 }

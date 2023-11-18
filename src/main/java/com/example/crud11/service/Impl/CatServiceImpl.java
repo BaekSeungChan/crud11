@@ -39,4 +39,22 @@ public class CatServiceImpl implements CatService {
 
         return modelMapper.map(cat, CatDto.class);
     }
+
+    @Override
+    public void deleteCat(long id){
+        Cat cat = catRepository.findById(id).orElseThrow(() -> new RuntimeException("No id"));
+        catRepository.delete(cat);
+    }
+
+    @Override
+    public CatDto updateCat(CatDto catDto, long id){
+        Cat cat = catRepository.findById(id).orElseThrow(() -> new RuntimeException("No id"));
+
+        cat.setName(catDto.getName());
+        cat.setAge(catDto.getAge());
+
+        Cat saveCat = catRepository.save(cat);
+
+        return modelMapper.map(saveCat, CatDto.class);
+    }
 }

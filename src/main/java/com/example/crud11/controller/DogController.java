@@ -32,4 +32,16 @@ public class DogController {
     public ResponseEntity<DogDto> getDogById(@PathVariable(name = "id") long id){
         return ResponseEntity.ok(dogService.getDogById(id));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteDog(@PathVariable(name = "id") long id){
+        dogService.deleteDog(id);
+        return ResponseEntity.ok("delete Dog");
+    }
+
+    @PutMapping("/{id}")
+    public  ResponseEntity<DogDto> updateDog(@PathVariable(name = "id") long id, @Valid @RequestBody DogDto dogDto){
+        DogDto saveDog = dogService.updateDog(dogDto, id);
+        return new ResponseEntity<>(saveDog, HttpStatus.OK);
+    }
 }
