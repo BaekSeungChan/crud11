@@ -8,6 +8,9 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class CatServiceImpl implements CatService {
@@ -23,4 +26,17 @@ public class CatServiceImpl implements CatService {
 
     }
 
+    @Override
+    public List<CatDto> getAllCat(){
+        List<Cat> cats = catRepository.findAll();
+
+        return cats.stream().map((cat) -> modelMapper.map(cat, CatDto.class)).collect(Collectors.toList());
+    }
+
+    @Override
+    public CatDto getCatById(long id){
+        Cat cat = catRepository.findById(id).orElseThrow(() -> new RuntimeException("No id"));
+
+        return modelMapper.map(cat, CatDto.class);
+    }
 }
