@@ -8,4 +8,6 @@ public class DogDto {
     private String name;
     private Integer age;
 
+    private Long catId;
+
 }

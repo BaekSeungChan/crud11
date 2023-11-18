@@ -19,4 +19,8 @@ public class Dog {
 
     @Column()
     private Integer age = 10;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cat_id")
+    private Cat cat;
 }
